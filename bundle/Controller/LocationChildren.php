@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Netgen\Bundle\OpenApiIbexaBundle\Controller;
 
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\IbexaSiteApi\API\Values\Location;
 use Netgen\OpenApiIbexa\Page\LocationList;
 use Netgen\OpenApiIbexa\Page\Output\OutputVisitor;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,9 +18,10 @@ use function max;
 use const JSON_THROW_ON_ERROR;
 use const JSON_UNESCAPED_SLASHES;
 
-final class LocationChildren extends AbstractController
+final class LocationChildren extends Controller
 {
     public function __construct(
+        private ConfigResolverInterface $configResolver,
         private OutputVisitor $outputVisitor,
         private int $defaultLimit,
     ) {}
@@ -41,11 +42,15 @@ final class LocationChildren extends AbstractController
 
         $data = $this->outputVisitor->visit(new LocationList($children));
 
-        return new JsonResponse(
+        $response = new JsonResponse(
             json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES),
             Response::HTTP_OK,
             [],
             true,
         );
+
+        $this->configureCache($this->configResolver, $response);
+
+        return $response;
     }
 }

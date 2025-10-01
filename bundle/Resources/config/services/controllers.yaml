@@ -44,6 +44,7 @@ services:
         class: Netgen\Bundle\OpenApiIbexaBundle\Controller\LocationChildren
         parent: netgen.openapi_ibexa.controller.base
         arguments:
+            - '@ibexa.config.resolver'
             - '@netgen.openapi_ibexa.page.output.visitor.output_visitor'
             - '%netgen.openapi_ibexa.default_limit%'
         public: true
@@ -54,6 +55,7 @@ services:
         class: Netgen\Bundle\OpenApiIbexaBundle\Controller\LocationSiblings
         parent: netgen.openapi_ibexa.controller.base
         arguments:
+            - '@ibexa.config.resolver'
             - '@netgen.openapi_ibexa.page.output.visitor.output_visitor'
             - '%netgen.openapi_ibexa.default_limit%'
         public: true
@@ -64,6 +66,7 @@ services:
         class: Netgen\Bundle\OpenApiIbexaBundle\Controller\ContentRelations
         parent: netgen.openapi_ibexa.controller.base
         arguments:
+            - '@ibexa.config.resolver'
             - '@netgen.openapi_ibexa.page.output.visitor.output_visitor'
             - '%netgen.openapi_ibexa.default_limit%'
         public: true
@@ -74,6 +77,7 @@ services:
         class: Netgen\Bundle\OpenApiIbexaBundle\Controller\ContentReverseRelations
         parent: netgen.openapi_ibexa.controller.base
         arguments:
+            - '@ibexa.config.resolver'
             - '@netgen.openapi_ibexa.page.output.visitor.output_visitor'
             - '%netgen.openapi_ibexa.default_limit%'
         public: true
