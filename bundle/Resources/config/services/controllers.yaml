@@ -45,6 +45,7 @@ services:
         parent: netgen.openapi_ibexa.controller.base
         arguments:
             - '@ibexa.config.resolver'
+            - '@Ibexa\Contracts\HttpCache\ResponseTagger\ResponseTagger'
             - '@netgen.openapi_ibexa.page.output.visitor.output_visitor'
             - '%netgen.openapi_ibexa.default_limit%'
         public: true
@@ -56,6 +57,7 @@ services:
         parent: netgen.openapi_ibexa.controller.base
         arguments:
             - '@ibexa.config.resolver'
+            - '@Ibexa\Contracts\HttpCache\ResponseTagger\ResponseTagger'
             - '@netgen.openapi_ibexa.page.output.visitor.output_visitor'
             - '%netgen.openapi_ibexa.default_limit%'
         public: true

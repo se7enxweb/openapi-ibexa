@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netgen\Bundle\OpenApiIbexaBundle\Controller;
 
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Contracts\HttpCache\ResponseTagger\ResponseTagger;
 use Netgen\IbexaSiteApi\API\Values\Location;
 use Netgen\OpenApiIbexa\Page\LocationList;
 use Netgen\OpenApiIbexa\Page\Output\OutputVisitor;
@@ -22,6 +23,7 @@ final class LocationChildren extends Controller
 {
     public function __construct(
         private ConfigResolverInterface $configResolver,
+        private ResponseTagger $responseTagger,
         private OutputVisitor $outputVisitor,
         private int $defaultLimit,
     ) {}
@@ -50,6 +52,9 @@ final class LocationChildren extends Controller
         );
 
         $this->configureCache($this->configResolver, $response);
+
+        $this->responseTagger->tag($location->innerLocation);
+        $this->responseTagger->tag($location->contentInfo->innerContentInfo);
 
         return $response;
     }
